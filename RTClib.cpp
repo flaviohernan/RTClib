@@ -80,7 +80,8 @@ DateTime::DateTime (uint32_t t) {
     t /= 60;
     hh = t % 24;
     uint16_t days = t / 24;
-    uint8_t leap;
+    // uint8_t leap;
+    uint16_t leap;
     for (yOff = 0; ; ++yOff) {
         leap = yOff % 4 == 0;
         if (days < 365 + leap)

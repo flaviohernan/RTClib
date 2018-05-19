@@ -16,9 +16,17 @@ class TimeSpan;
 #define DS1307_CONTROL  0x07
 #define DS1307_NVRAM    0x08
 
-#define DS3231_ADDRESS  0x68
+#define DS3231_ALRM1SEC  0x07
+#define DS3231_ALRM1MIN  0x08
+#define DS3231_ALRM1HOUR  0x09
+#define DS3231_ALRM1DAYDATE  0x0A
+#define DS3231_ALRM2MIN  0x0B
+#define DS3231_ALRM2HOUR  0x0C
+#define DS3231_ALRM2DAYDATE  0x0D
 #define DS3231_CONTROL  0x0E
 #define DS3231_STATUSREG 0x0F
+
+#define DS3231_ADDRESS  0x68
 
 #define SECONDS_PER_DAY 86400L
 
@@ -99,6 +107,10 @@ class RTC_DS3231 {
 public:
     boolean begin(void);
     static void adjust(const DateTime& dt);
+    static void adjustAlarm1(const DateTime& dt);
+    static void adjustAlarm2(const DateTime& dt);
+    static void readFlagAlarm1(const DateTime& dt);
+    static void readFlagAlarm2(const DateTime& dt);
     bool lostPower(void);
     static DateTime now();
     static Ds3231SqwPinMode readSqwPinMode();
