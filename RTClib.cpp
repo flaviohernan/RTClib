@@ -505,3 +505,19 @@ void RTC_DS3231::writeSqwPinMode(Ds3231SqwPinMode mode) {
 
   //Serial.println( read_i2c_register(DS3231_ADDRESS, DS3231_CONTROL), HEX);
 }
+
+DateTime RTC_DS3231:: adjustAlarm1(const DateTime& dt, DS3231_ALARM_TYPES_t mode) {
+  Wire.beginTransmission(DS3231_ADDRESS);
+  Wire._I2C_WRITE((byte)DS3231_ALRM1SEC);	
+  Wire.endTransmission();
+
+  Wire.requestFrom(DS3231_ADDRESS, 4);
+  uint8_t ss = bcd2bin(Wire._I2C_READ() & 0x7F);
+  uint8_t mm = bcd2bin(Wire._I2C_READ());
+  uint8_t hh = bcd2bin(Wire._I2C_READ());
+  uint8_t d = bcd2bin(Wire._I2C_READ());
+  uint8_t m = 0;
+  uint16_t y = 0;
+  
+  return DateTime (y, m, d, hh, mm, ss);
+}
