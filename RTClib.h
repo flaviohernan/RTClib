@@ -26,6 +26,19 @@ class TimeSpan;
 #define DS3231_CONTROL  0x0E
 #define DS3231_STATUSREG 0x0F
 
+/*
+DY/~DT A1M4 A1M3 A1M2 A1M1
+*/
+enum DS3231_ALARM_TYPES_t {
+    DS3231_ALM1_EVERY_SECOND = 0x0F,      //every_second
+    DS3231_ALM1_MATCH_SECONDS = 0x0E,     //match seconds
+    DS3231_ALM1_MATCH_MINUTES = 0x0C,     //match minutes *and* seconds
+    DS3231_ALM1_MATCH_HOURS = 0x08,       //match hours *and* minutes, seconds
+    DS3231_ALM1_MATCH_DATE = 0x00,        //match date *and* hours, minutes, seconds
+    DS3231_ALM1_MATCH_DAY = 0x10,         //match day *and* hours, minutes, seconds
+};
+
+
 #define DS3231_ADDRESS  0x68
 
 #define SECONDS_PER_DAY 86400L
