@@ -35,7 +35,7 @@ enum DS3231_ALARM_TYPES_t {
     DS3231_ALM1_MATCH_MINUTES = 0x0C,     //match minutes *and* seconds
     DS3231_ALM1_MATCH_HOURS = 0x08,       //match hours *and* minutes, seconds
     DS3231_ALM1_MATCH_DATE = 0x00,        //match date *and* hours, minutes, seconds
-    DS3231_ALM1_MATCH_DAY = 0x10,         //match day *and* hours, minutes, seconds
+    DS3231_ALM1_MATCH_DAY = 0x10         //match day *and* hours, minutes, seconds
 };
 
 
@@ -120,10 +120,12 @@ class RTC_DS3231 {
 public:
     boolean begin(void);
     static void adjust(const DateTime& dt);
-    static void adjustAlarm1(const DateTime& dt);
-    static void adjustAlarm2(const DateTime& dt);
-    static void readFlagAlarm1(const DateTime& dt);
-    static void readFlagAlarm2(const DateTime& dt);
+    static void adjustAlarm1(const DateTime& dt, DS3231_ALARM_TYPES_t mode);
+    static void enableAlarm1(void);
+    static void disableAlarm1(void);
+    static uint8_t readFlagAlarm1(void);
+    static void adjustAlarm2(const DateTime& dt, DS3231_ALARM_TYPES_t mode);
+    static uint8_t readFlagAlarm2(void);
     bool lostPower(void);
     static DateTime now();
     static Ds3231SqwPinMode readSqwPinMode();
