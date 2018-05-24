@@ -120,10 +120,14 @@ class RTC_DS3231 {
 public:
     boolean begin(void);
     static void adjust(const DateTime& dt);
+
     static DateTime adjustAlarm1(const DateTime& dt, DS3231_ALARM_TYPES_t mode);
     static void enableAlarm1(void);
     static void disableAlarm1(void);
-    static uint8_t readFlagAlarm1(void);
+    static uint8_t clearFlagAlarm1(void);
+    static void confgOutINTSQW(void);
+
+
     static void adjustAlarm2(const DateTime& dt, DS3231_ALARM_TYPES_t mode);
     static uint8_t readFlagAlarm2(void);
     bool lostPower(void);
