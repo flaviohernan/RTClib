@@ -547,7 +547,25 @@ static void RTC_DS3231:: enableAlarm1(void) {
 
 }
 
-static uint8_t RTC_DS3231:: clearFlagAlarm1(void) {
+uint8_t RTC_DS3231:: clearFlagAlarm1(void) {
 
-  
+  Wire.beginTransmission(DS3231_ADDRESS);
+  Wire._I2C_WRITE((byte)DS3231_STATUSREG);	
+  Wire.endTransmission();
+
+  Wire.requestFrom(DS3231_ADDRESS, 1);
+  uint8_t add0Fstsreg = Wire._I2C_READ() ;
+  uint8_t flagReturn = EXIT_FAILURE;
+  if ((add0Fstsreg & 0x01) == 0x01) {
+    flagReturn = EXIT_SUCCESS;
+  }
+
+  add0Fstsreg &= ~0x01; // clear A1F 
+
+  Wire.beginTransmission(DS3231_ADDRESS);
+  Wire._I2C_WRITE((byte)DS3231_STATUSREG);
+  Wire._I2C_WRITE((byte)add0Fstsreg);	
+  Wire.endTransmission();
+
+  return flagReturn;
 }

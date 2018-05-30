@@ -124,7 +124,7 @@ public:
     static DateTime adjustAlarm1(const DateTime& dt, DS3231_ALARM_TYPES_t mode);
     static void enableAlarm1(void);
     static void disableAlarm1(void);
-    static uint8_t clearFlagAlarm1(void);
+    uint8_t clearFlagAlarm1(void);
     static void confgOutINTSQW(void);
 
 
