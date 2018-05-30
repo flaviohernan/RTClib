@@ -507,17 +507,27 @@ void RTC_DS3231::writeSqwPinMode(Ds3231SqwPinMode mode) {
 }
 
 DateTime RTC_DS3231:: adjustAlarm1(const DateTime& dt, DS3231_ALARM_TYPES_t mode) {
+  uint8_t add07hss = (0x01 & mode) << 7;
+  add07hss |= bin2bcd(dt.second());
+  uint8_t add08mm = (0x02 & mode) << 6;
+  add08mm |= bin2bcd(dt.minute());
+  uint8_t add09hh = (0x04 & mode) << 5;
+  add09hh |= bin2bcd(dt.hour());
+  uint8_t add0Ad = (0x18 & mode) << 3;
+  add0Ad |= bin2bcd(dt.day());
   Wire.beginTransmission(DS3231_ADDRESS);
-  Wire._I2C_WRITE((byte)DS3231_ALRM1SEC);	
+  Wire._I2C_WRITE((byte)DS3231_ALRM1SEC);
+  Wire._I2C_WRITE(add07hss);
+  Wire._I2C_WRITE(add08mm);
+  Wire._I2C_WRITE(add09hh);
+  Wire._I2C_WRITE(add0Ad);
   Wire.endTransmission();
-
-  Wire.requestFrom(DS3231_ADDRESS, 4);
-  uint8_t ss = bcd2bin(Wire._I2C_READ() & 0x7F);
-  uint8_t mm = bcd2bin(Wire._I2C_READ());
-  uint8_t hh = bcd2bin(Wire._I2C_READ());
-  uint8_t d = bcd2bin(Wire._I2C_READ());
-  uint8_t m = 0;
-  uint16_t y = 0;
   
-  return DateTime (y, m, d, hh, mm, ss);
+  // return DateTime (y, m, d, hh, mm, ss);
+  return 0;
+}
+
+
+static uint8_t RTC_DS3231:: clearFlagAlarm1(void) {
+
 }
