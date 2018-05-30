@@ -544,7 +544,24 @@ static void RTC_DS3231:: enableAlarm1(void) {
   Wire._I2C_WRITE((byte)add0Ectr);	
   Wire.endTransmission();
   
+}
 
+static void RTC_DS3231:: disableAlarm1(void) {
+
+  Wire.beginTransmission(DS3231_ADDRESS);
+  Wire._I2C_WRITE((byte)DS3231_CONTROL);	
+  Wire.endTransmission();
+
+  Wire.requestFrom(DS3231_ADDRESS, 1);
+  uint8_t add0Ectr = Wire._I2C_READ() ;
+
+  add0Ectr &= ~0x05; // disable A1IE and INTCN
+
+  Wire.beginTransmission(DS3231_ADDRESS);
+  Wire._I2C_WRITE((byte)DS3231_CONTROL);
+  Wire._I2C_WRITE((byte)add0Ectr);	
+  Wire.endTransmission();
+  
 }
 
 uint8_t RTC_DS3231:: clearFlagAlarm1(void) {
