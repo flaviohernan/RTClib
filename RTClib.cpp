@@ -434,7 +434,22 @@ void RTC_PCF8523::writeSqwPinMode(Pcf8523SqwPinMode mode) {
 
 boolean RTC_DS3231::begin(void) {
   Wire.begin();
-  return true;
+  Wire.beginTransmission(DS3231_ADDRESS);
+
+  /*
+  endTransmission()
+  return:
+    0   :success
+    1   :data too long to fit in transmit buffer
+    2   :received NACK on transmit of address
+    3   :received NACK on transmit of data
+    4   :other error
+  */
+  if(Wire.endTransmission() > 0) {
+    return EXIT_FAILURE;
+  }
+  
+  return EXIT_SUCCESS;
 }
 
 bool RTC_DS3231::lostPower(void) {
