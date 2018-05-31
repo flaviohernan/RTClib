@@ -542,7 +542,7 @@ DateTime RTC_DS3231:: adjustAlarm1(const DateTime& dt, DS3231_ALARM_TYPES_t mode
   return 0;
 }
 
-static void RTC_DS3231:: enableAlarm1(void) {
+void RTC_DS3231:: enableAlarm1(void) {
 
   Wire.beginTransmission(DS3231_ADDRESS);
   Wire._I2C_WRITE((byte)DS3231_CONTROL);	
@@ -561,7 +561,7 @@ static void RTC_DS3231:: enableAlarm1(void) {
   
 }
 
-static void RTC_DS3231:: disableAlarm1(void) {
+void RTC_DS3231:: disableAlarm1(void) {
 
   Wire.beginTransmission(DS3231_ADDRESS);
   Wire._I2C_WRITE((byte)DS3231_CONTROL);	
