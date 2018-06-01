@@ -528,14 +528,16 @@ DateTime RTC_DS3231:: adjustAlarm1(const DateTime& dt, DS3231_ALARM_TYPES_t mode
   add08mm |= bin2bcd(dt.minute());
   uint8_t add09hh = (0x04 & mode) << 5;
   add09hh |= bin2bcd(dt.hour());
-  uint8_t add0Ad = (0x18 & mode) << 3;
+  uint8_t add0Ad = (0x08 & mode) << 4;
+  add0Ad |= (0x10 & mode) << 2;
   add0Ad |= bin2bcd(dt.day());
+  
   Wire.beginTransmission(DS3231_ADDRESS);
   Wire._I2C_WRITE((byte)DS3231_ALRM1SEC);
-  Wire._I2C_WRITE(add07hss);
-  Wire._I2C_WRITE(add08mm);
-  Wire._I2C_WRITE(add09hh);
-  Wire._I2C_WRITE(add0Ad);
+  Wire._I2C_WRITE((byte)add07hss);
+  Wire._I2C_WRITE((byte)add08mm);
+  Wire._I2C_WRITE((byte)add09hh);
+  Wire._I2C_WRITE((byte)add0Ad);
   Wire.endTransmission();
   
   // return DateTime (y, m, d, hh, mm, ss);
