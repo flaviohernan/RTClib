@@ -603,3 +603,20 @@ uint8_t RTC_DS3231:: clearFlagAlarm1(void) {
 
   return flagReturn;
 }
+
+float RTC_DS3231::getTemperature (void) {
+  
+  Wire.beginTransmission(DS3231_ADDRESS);
+  Wire._I2C_WRITE((byte)DS3231_TEMP_UP);	
+  Wire.endTransmission();
+
+  Wire.requestFrom(DS3231_ADDRESS, 2);
+  uint16_t digitalTemp = Wire._I2C_READ();
+
+  digitalTemp = (digitalTemp << 2);
+  digitalTemp |= (Wire._I2C_READ() >> 6);
+
+  return (digitalTemp*0.25);
+
+
+}
