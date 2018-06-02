@@ -25,6 +25,8 @@ class TimeSpan;
 #define DS3231_ALRM2DAYDATE  0x0D
 #define DS3231_CONTROL  0x0E
 #define DS3231_STATUSREG 0x0F
+#define DS3231_TEMP_UP 0x11
+#define DS3231_TEMP_LOW 0x12
 
 /*
 DY/~DT A1M4 A1M3 A1M2 A1M1
@@ -120,6 +122,7 @@ class RTC_DS3231 {
 public:
     boolean begin(void);
     static void adjust(const DateTime& dt);
+    float getTemperature (void);
 
     DateTime adjustAlarm1(const DateTime& dt, DS3231_ALARM_TYPES_t mode);
     void enableAlarm1(void);
